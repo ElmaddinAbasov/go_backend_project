@@ -35,6 +35,17 @@ type User struct
 	Email string `gorm:"unique"`
 	Password string
 }
+Подсоединяем модель к базе данных через функцию func SyncDatabase(), так же помещаем её в функцию init().
+
+# Функция регистрации func Signup(c *gin.Context)
+В функции мы получем пару email/пароль(password). После этого мы хэшируем пароль, затем создаем пользователя(user) и после этого ответ.
+В структуре body мы сохраним email/password который мы получим -> var body struct.
+Хешируем пароль с помощью функции bctypt, передаем пароль(password) hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
+И в конце создаем пользователя на основе полученной пары(email/password) с помощью функции
+user := User{Email:body.Email, Password:string(hash)}
+
+В фнукции main посылаем запрос POST
+r.POST("/singup", Signup)
 # Результат работы
 
 Результат должен быть представлен в виде исходного кода на GitHub. 
